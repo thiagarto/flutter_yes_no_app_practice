@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:yes_no_app/domain/entities/message.dart';
 
 class HerMessageBubble extends StatelessWidget {
-  const HerMessageBubble({super.key});
+  final Message message; //instancio message
+  const HerMessageBubble({super.key, required this.message});//le agrego las propiedades
 
   @override
   Widget build(BuildContext context) {
@@ -15,19 +17,19 @@ class HerMessageBubble extends StatelessWidget {
               //estilos del contenedor
               color: colors.secondary,
               borderRadius: BorderRadius.circular(20)),
-          child:const Padding(
-            padding:  EdgeInsets.symmetric(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
                 horizontal: 20,
                 vertical: 10), //emvolvemos el texto en un padding
             child: Text(
-              'Hola Mundo',
-              style: TextStyle(color: Colors.white),
+              message.text,//aca ya lo puedo usar
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         ),
         const SizedBox(height: 5), //espacio entre mensajes
 
-        _ImageBubble(),
+        _ImageBubble(message.imageUrl!),
         const SizedBox(height: 10),
         //Todo: imagen
       ],
@@ -36,6 +38,10 @@ class HerMessageBubble extends StatelessWidget {
 }
 
 class _ImageBubble extends StatelessWidget {
+  final String imageUrl;//instancio la imagen
+
+  const _ImageBubble( this.imageUrl);
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -44,7 +50,8 @@ class _ImageBubble extends StatelessWidget {
     return ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Image.network(
-          'https://yesno.wtf/assets/yes/11-a23cbde4ae018bbda812d2d8b2b8fc6c.gif',
+          imageUrl,//aca ya lo puedo usar
+          //'https://yesno.wtf/assets/yes/11-a23cbde4ae018bbda812d2d8b2b8fc6c.gif',
           width: size.width * 0.5, //para cambiar el tamaño de la imagen
           height: 150, //dejamos este fijo para que no se desproporcione
           fit: BoxFit.cover,
